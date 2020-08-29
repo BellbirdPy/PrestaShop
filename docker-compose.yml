@@ -9,7 +9,7 @@ services:
   mysql:
     image: mysql:5
     ports:
-      - "3306"
+      - "33061:3306"
     volumes:
       - db-data:/var/lib/mysql
     environment:
@@ -18,17 +18,23 @@ services:
     restart: always
   prestashop-git:
     build: .docker
+    restart: always
     environment:
       PS_INSTALL_AUTO: 1
       DB_PASSWD: prestashop
       DB_NAME: prestashop
       DB_SERVER: mysql
-      PS_DOMAIN: localhost:8001
+      PS_DOMAIN: localhost
       PS_FOLDER_INSTALL: install-dev
       PS_FOLDER_ADMIN: admin-dev
+      PS_LANGUAGE: es
+      PS_COUNTRY: py
+      ADMIN_MAIL: rauleburro@bellbird.com.py
+      ADMIN_PASSWD: Bell2473.,
+
     command: ["/tmp/wait-for-it.sh", "--timeout=60", "--strict", "mysql:3306", "--", "/tmp/docker_run_git.sh"]
     ports:
-      - "8001:80"
+      - "80:80"
     volumes:
       - ./:/var/www/html/:delegated
       - vendor:/var/www/html/vendor

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ ! -f ./vendor/autoload.php  ]; then
 	echo "\n* Vendor autoloader not found, running composer ...";
